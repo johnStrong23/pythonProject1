@@ -1,6 +1,14 @@
 # Extract features
 import os, shutil
 from keras.preprocessing.image import ImageDataGenerator
+from keras import models
+from keras import layers
+from keras import optimizers
+
+import sklearn
+from sklearn.cross_validation import train_test_split
+from sklearn.grid_search import GridSearchCV
+from sklearn.svm import LinearSVC
 
 datagen = ImageDataGenerator(rescale=1. / 255)
 batch_size = 32
@@ -32,10 +40,6 @@ validation_features, validation_labels = extract_features(validation_dir, valida
 test_features, test_labels = extract_features(test_dir, test_size)
 
 # Define model
-from keras import models
-from keras import layers
-from keras import optimizers
-
 epochs = 100
 
 model = models.Sequential()
@@ -61,10 +65,6 @@ svm_features = np.concatenate((train_features, validation_features))
 svm_labels = np.concatenate((train_labels, validation_labels))
 
 # Build model
-import sklearn
-from sklearn.cross_validation import train_test_split
-from sklearn.grid_search import GridSearchCV
-from sklearn.svm import LinearSVC
 
 X_train, y_train = svm_features.reshape(300, 7 * 7 * 512), svm_labels
 
@@ -75,4 +75,3 @@ param = [{
 svm = LinearSVC(penalty='l2', loss='squared_hinge')  # As in Tang (2013)
 clf = GridSearchCV(svm, param, cv=10)
 clf.fit(X_train, y_train)
-
