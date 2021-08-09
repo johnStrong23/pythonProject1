@@ -4,6 +4,7 @@ from keras.preprocessing.image import ImageDataGenerator
 from keras import models
 from keras import layers
 from keras import optimizers
+import numpy as np
 
 import sklearn
 from sklearn.cross_validation import train_test_split
