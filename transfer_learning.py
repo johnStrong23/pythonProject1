@@ -76,3 +76,5 @@ param = [{
 svm = LinearSVC(penalty='l2', loss='squared_hinge')  # As in Tang (2013)
 clf = GridSearchCV(svm, param, cv=10)
 clf.fit(X_train, y_train)
+
+# add this line comment to check the connection bt slack and github
